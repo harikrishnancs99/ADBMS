@@ -1,0 +1,175 @@
+student@student-OptiPlex-3050:~$ sudo su
+[sudo] password for student: 
+root@student-OptiPlex-3050:/home/student# mysql -u root -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 32
+Server version: 10.0.38-MariaDB-0ubuntu0.16.04.1 Ubuntu 16.04
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use HARI;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MariaDB [HARI]> create table author(id int PRIMARY KEY,
+    -> name varchar(40),
+    -> city varchar(50),
+    -> country varchar(30),
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 4
+MariaDB [HARI]> create table author(id int PRIMARY KEY, name varchar(40), city varchar(50), country varchar(30);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+MariaDB [HARI]> create table author(id int PRIMARY KEY, name varchar(40), city varchar(50), country varchar(30));
+Query OK, 0 rows affected (0.22 sec)
+
+MariaDB [HARI]> create table publisher(id int PRIMARY KEY, name varchar(40), city varchar(50), country varchar(30));
+Query OK, 0 rows affected (0.24 sec)
+
+MariaDB [HARI]> create table category(id int PRIMARY KEY, description varchar(40));
+Query OK, 0 rows affected (0.24 sec)
+
+MariaDB [HARI]> create table books(bookid int,title varchar(30),authorid int references author.id,publisherid int references publisher.id,categoryid references category.id,year int,price int);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'references category.id,year int,price int)' at line 1
+MariaDB [HARI]> create table books(bookid int,title varchar(30),authorid int references author.id,publisherid int references publisher.id,categoryid int references category.id,year int,price int);
+Query OK, 0 rows affected (0.26 sec)
+
+MariaDB [HARI]> insert into author values(1,'Henry Fielding','Sharpam','England'),
+    ->                                   (2,'Jane Austen','Steventon','England'),
+    ->                                   (3,'Dan Brown','Exeter','United States'),
+    ->                                   (4,'Chetan Bhagat','New Delhi','India');
+Query OK, 4 rows affected (0.03 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [HARI]> insert into publisher values(1,'Andrew Millar','Edinburgh','Scottland'),
+    ->                                      (2,'Thomas Egerton','Whitehall','England'),
+    ->                                      (3,'Double Day','New York','United States'),
+    ->                                      (4,'Rupa Publications','New Delhi','India');
+Query OK, 4 rows affected (0.04 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [HARI]> insert into category values(1,'Mystery),(2,'Fiction'),(3,'Comic'),(4,'Autobiography');
+    '> insert into category values(1,'Mystery'),(2,'Fiction'),(3,'Comic'),(4,'Autobiography');
+    '> ');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'Fiction'),(3,'Comic'),(4,'Autobiography');
+insert into category values(1,'Myster' at line 1
+MariaDB [HARI]> insert into category values(1,'Mystery'),(2,'Fiction'),(3,'Comic'),(4,'Autobiography');
+Query OK, 4 rows affected (0.03 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [HARI]> insert into books values(1,'The History of Tom Jones, a Foundling',1,1,3,1749,601)
+    ->          (2,'Pride and Prejudice',2,2,2,1813,171;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(2,'Pride and Prejudice',2,2,2,1813,171' at line 2
+MariaDB [HARI]> insert into books values(1,'The History of Tom Jones, a Foundling',1,1,3,1749,601),          (2,'Pride and Prejudice',2,2,2,1813,171),(3,'The Davinci Code',3,3,1,2003,700),(4,'2 States',4,4,2,2009,500);
+Query OK, 4 rows affected, 1 warning (0.03 sec)
+Records: 4  Duplicates: 0  Warnings: 1
+
+MariaDB [HARI]> select * from books b left join author a on a.id=b.authorid left join publisher p on p.id=b.publisherid left join category c on c.id=b.categoryid;
++--------+--------------------------------+----------+-------------+------------+------+-------+------+----------------+-----------+---------------+------+-------------------+-----------+---------------+------+-------------+
+| bookid | title                          | authorid | publisherid | categoryid | year | price | id   | name           | city      | country       | id   | name              | city      | country       | id   | description |
++--------+--------------------------------+----------+-------------+------------+------+-------+------+----------------+-----------+---------------+------+-------------------+-----------+---------------+------+-------------+
+|      1 | The History of Tom Jones, a Fo |        1 |           1 |          3 | 1749 |   601 |    1 | Henry Fielding | Sharpam   | England       |    1 | Andrew Millar     | Edinburgh | Scottland     |    3 | Comic       |
+|      2 | Pride and Prejudice            |        2 |           2 |          2 | 1813 |   171 |    2 | Jane Austen    | Steventon | England       |    2 | Thomas Egerton    | Whitehall | England       |    2 | Fiction     |
+|      3 | The Davinci Code               |        3 |           3 |          1 | 2003 |   700 |    3 | Dan Brown      | Exeter    | United States |    3 | Double Day        | New York  | United States |    1 | Mystery     |
+|      4 | 2 States                       |        4 |           4 |          2 | 2009 |   500 |    4 | Chetan Bhagat  | New Delhi | India         |    4 | Rupa Publications | New Delhi | India         |    2 | Fiction     |
++--------+--------------------------------+----------+-------------+------------+------+-------+------+----------------+-----------+---------------+------+-------------------+-----------+---------------+------+-------------+
+4 rows in set (0.00 sec)
+
+MariaDB [HARI]> alter table books Modify bookid int PRIMARY KEY AUTO_INCREMENT;
+Query OK, 4 rows affected (0.58 sec)               
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [HARI]> desc books;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| bookid      | int(11)     | NO   | PRI | NULL    | auto_increment |
+| title       | varchar(30) | YES  |     | NULL    |                |
+| authorid    | int(11)     | YES  |     | NULL    |                |
+| publisherid | int(11)     | YES  |     | NULL    |                |
+| categoryid  | int(11)     | YES  |     | NULL    |                |
+| year        | int(11)     | YES  |     | NULL    |                |
+| price       | int(11)     | YES  |     | NULL    |                |
++-------------+-------------+------+-----+---------+----------------+
+7 rows in set (0.01 sec)
+
+MariaDB [HARI]> select * from books;
++--------+--------------------------------+----------+-------------+------------+------+-------+
+| bookid | title                          | authorid | publisherid | categoryid | year | price |
++--------+--------------------------------+----------+-------------+------------+------+-------+
+|      1 | The History of Tom Jones, a Fo |        1 |           1 |          3 | 1749 |   601 |
+|      2 | Pride and Prejudice            |        2 |           2 |          2 | 1813 |   171 |
+|      3 | The Davinci Code               |        3 |           3 |          1 | 2003 |   700 |
+|      4 | 2 States                       |        4 |           4 |          2 | 2009 |   500 |
++--------+--------------------------------+----------+-------------+------------+------+-------+
+4 rows in set (0.00 sec)
+
+MariaDB [HARI]> select bookid,title,price from books;
++--------+--------------------------------+-------+
+| bookid | title                          | price |
++--------+--------------------------------+-------+
+|      1 | The History of Tom Jones, a Fo |   601 |
+|      2 | Pride and Prejudice            |   171 |
+|      3 | The Davinci Code               |   700 |
+|      4 | 2 States                       |   500 |
++--------+--------------------------------+-------+
+4 rows in set (0.00 sec)
+
+MariaDB [HARI]> select title from books b left join category c on b.categoryid=c.id where c.description !='Fiction';
++--------------------------------+
+| title                          |
++--------------------------------+
+| The Davinci Code               |
+| The History of Tom Jones, a Fo |
++--------------------------------+
+2 rows in set (0.00 sec)
+
+MariaDB [HARI]> select title from books where price>500;
++--------------------------------+
+| title                          |
++--------------------------------+
+| The History of Tom Jones, a Fo |
+| The Davinci Code               |
++--------------------------------+
+2 rows in set (0.00 sec)
+
+MariaDB [HARI]> insert into author values(5,'A.P.J Abdul Kalam','Rameswaram','India');Query OK, 1 row affected (0.04 sec)
+
+MariaDB [HARI]> insert into publisher values(5,'Harper Collins','New York','United States');
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [HARI]> insert into books values(5,'Beyond 2020',5,5,4,2014,1000);
+Query OK, 1 row affected (0.03 sec)
+
+MariaDB [HARI]> select * from books where title like 'B%';
++--------+-------------+----------+-------------+------------+------+-------+
+| bookid | title       | authorid | publisherid | categoryid | year | price |
++--------+-------------+----------+-------------+------------+------+-------+
+|      5 | Beyond 2020 |        5 |           5 |          4 | 2014 |  1000 |
++--------+-------------+----------+-------------+------------+------+-------+
+1 row in set (0.00 sec)
+
+MariaDB [HARI]> select title,a.name as author,p.name as publisher from books b left join author a on a.id=b.authorid left join publisher p on p.id=b.publisherid;
++--------------------------------+-------------------+-------------------+
+| title                          | author            | publisher         |
++--------------------------------+-------------------+-------------------+
+| The History of Tom Jones, a Fo | Henry Fielding    | Andrew Millar     |
+| Pride and Prejudice            | Jane Austen       | Thomas Egerton    |
+| The Davinci Code               | Dan Brown         | Double Day        |
+| 2 States                       | Chetan Bhagat     | Rupa Publications |
+| Beyond 2020                    | A.P.J Abdul Kalam | Harper Collins    |
++--------------------------------+-------------------+-------------------+
+5 rows in set (0.00 sec)
+
+MariaDB [HARI]> select * from books where price>600 and price<800;
++--------+--------------------------------+----------+-------------+------------+------+-------+
+| bookid | title                          | authorid | publisherid | categoryid | year | price |
++--------+--------------------------------+----------+-------------+------------+------+-------+
+|      1 | The History of Tom Jones, a Fo |        1 |           1 |          3 | 1749 |   601 |
+|      3 | The Davinci Code               |        3 |           3 |          1 | 2003 |   700 |
++--------+--------------------------------+----------+-------------+------------+------+-------+
+2 rows in set (0.00 sec)
+

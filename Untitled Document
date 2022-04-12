@@ -1,0 +1,178 @@
+student@student-OptiPlex-3050:~$ sudo mysql -u root -p
+[sudo] password for student: 
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 33
+Server version: 10.0.38-MariaDB-0ubuntu0.16.04.1 Ubuntu 16.04
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> create table employees(emp_id int PRIMARY KET AUTO INCREMENT,first_name varchar(25),last_name varchar(25),email varchar(50),ph_no long, hire_date date,job_id int,salary double,manager_id int,department_id int);
+ERROR 1046 (3D000): No database selected
+MariaDB [(none)]> create database HARI;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [(none)]> use database HARI;
+ERROR 1049 (42000): Unknown database 'database'
+MariaDB [(none)]> use HARI;
+Database changed
+MariaDB [HARI]> create table employees(emp_id int PRIMARY KET AUTO INCREMENT,first_name varchar(25),last_name varchar(25),email varchar(50),ph_no long, hire_date date,job_id int,salary double,manager_id int,department_id int);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'KET AUTO INCREMENT,first_name varchar(25),last_name varchar(25),email varchar(50' at line 1
+MariaDB [HARI]> create table employees(emp_id int PRIMARY KET AUTO INCREMENT,first_name varchar(25),last_name varchar(25),email varchar(50),ph_no long, hire_date date,job_id int,salary double,manager_id int,department_id int);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'KET AUTO INCREMENT,first_name varchar(25),last_name varchar(25),email varchar(50' at line 1
+MariaDB [HARI]> create table employees(emp_id int PRIMARY KEY AUTO INCREMENT,first_name varchar(25),last_name varchar(25),email varchar(50),ph_no long, hire_date date,job_id int,salary double,manager_id int,department_id int);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'AUTO INCREMENT,first_name varchar(25),last_name varchar(25),email varchar(50),ph' at line 1
+MariaDB [HARI]> create table employees(emp_id int PRIMARY KEY AUTO_INCREMENT,first_name varchar(25),last_name varchar(25),email varchar(50),ph_no long, hire_date date,job_id int,salary double,manager_id int,department_id int);
+Query OK, 0 rows affected (0.23 sec)
+
+MariaDB [HARI]> create table jobs(
+    ->                 job_id int PRIMARY KEY AUTO_INCREMENT,
+    ->                 job_title varchar(50),
+    ->                 min_salary double,
+    ->                 max_salary double);
+Query OK, 0 rows affected (0.26 sec)
+
+MariaDB [HARI]> create table depatments(
+    ->                 department_id int PRIMARY KEY AUTO_INCREMENT,
+    ->                 department_name varchar(30));
+Query OK, 0 rows affected (0.20 sec)
+
+MariaDB [HARI]> ALTER TABLE departments RENAME to Dept; 
+ERROR 1146 (42S02): Table 'HARI.departments' doesn't exist
+MariaDB [HARI]> ALTER TABLE depatments RENAME to Dept; 
+Query OK, 0 rows affected (0.10 sec)
+
+MariaDB [HARI]> alter table employees add FOREIGN KEY(job_id) REFERENCES jobs(job_id);
+Query OK, 0 rows affected (0.57 sec)               
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [HARI]> alter table employees add FOREIGN KEY(department_id) REFERENCES Dept(department_id);
+Query OK, 0 rows affected (0.59 sec)               
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [HARI]> alter table employees add FOREIGN KEY(manager_id) REFERENCES employees(emp_id);
+Query OK, 0 rows affected (0.58 sec)               
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [HARI]> alter table employees modify salary smallint;
+Query OK, 0 rows affected (1.13 sec)               
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [HARI]> alter table employees add commission int;
+Query OK, 0 rows affected (0.43 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [HARI]> alter table employees drop hire_date;
+Query OK, 0 rows affected (0.59 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [HARI]> insert into table employees values
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'table employees values' at line 1
+MariaDB [HARI]> insert into table jabs values
+    ->          (1,'Manager',100000,500000),
+    ->          (2,'System Administrator',200000,700000),
+    ->          (3,'Developer',10000,30000),
+    ->          (4,'Data Scientist',100000,700000),
+    ->          (5,'Designer',50000,500000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'table jabs values
+         (1,'Manager',100000,500000),
+         (2,'System Admi' at line 1
+MariaDB [HARI]> insert into table jobs values          (1,'Manager',100000,500000),          (2,'System Administrator',200000,700000),          (3,'Developer',10000,30000),          (4,'Data Scientist',100000,700000),          (5,'Designer',50000,500000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'table jobs values          (1,'Manager',100000,500000),          (2,'System Admi' at line 1
+MariaDB [HARI]> insert into jobs values          (1,'Manager',100000,500000),          (2,'System Administrator',200000,700000),          (3,'Developer',10000,30000),          (4,'Data Scientist',100000,700000),          (5,'Designer',50000,500000);
+Query OK, 5 rows affected (0.03 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [HARI]> insert into Dept values
+    ->          (1,'IT')
+    ->          (2,'Management');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(2,'Management')' at line 3
+MariaDB [HARI]> insert into Dept values          (1,'IT'),          (2,'Management'),
+    ->          (3,'Customer care'),
+    ->          (4,'Sales'),
+    ->          (5,'Purchase');
+Query OK, 5 rows affected (0.04 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [HARI]> select * from jobs;
++--------+----------------------+------------+------------+
+| job_id | job_title            | min_salary | max_salary |
++--------+----------------------+------------+------------+
+|      1 | Manager              |     100000 |     500000 |
+|      2 | System Administrator |     200000 |     700000 |
+|      3 | Developer            |      10000 |      30000 |
+|      4 | Data Scientist       |     100000 |     700000 |
+|      5 | Designer             |      50000 |     500000 |
++--------+----------------------+------------+------------+
+5 rows in set (0.00 sec)
+
+MariaDB [HARI]> select * from Dept;
++---------------+-----------------+
+| department_id | department_name |
++---------------+-----------------+
+|             1 | IT              |
+|             2 | Management      |
+|             3 | Customer care   |
+|             4 | Sales           |
+|             5 | Purchase        |
++---------------+-----------------+
+5 rows in set (0.00 sec)
+
+MariaDB [HARI]> insert into employees values
+    ->          ;;;;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1
+ERROR: No query specified
+
+ERROR: No query specified
+
+ERROR: No query specified
+
+MariaDB [HARI]> select * from employees;
+Empty set (0.00 sec)
+
+MariaDB [HARI]> desc employees;
++---------------+-------------+------+-----+---------+----------------+
+| Field         | Type        | Null | Key | Default | Extra          |
++---------------+-------------+------+-----+---------+----------------+
+| emp_id        | int(11)     | NO   | PRI | NULL    | auto_increment |
+| first_name    | varchar(25) | YES  |     | NULL    |                |
+| last_name     | varchar(25) | YES  |     | NULL    |                |
+| email         | varchar(50) | YES  |     | NULL    |                |
+| ph_no         | mediumtext  | YES  |     | NULL    |                |
+| job_id        | int(11)     | YES  | MUL | NULL    |                |
+| salary        | smallint(6) | YES  |     | NULL    |                |
+| manager_id    | int(11)     | YES  | MUL | NULL    |                |
+| department_id | int(11)     | YES  | MUL | NULL    |                |
+| commission    | int(11)     | YES  |     | NULL    |                |
++---------------+-------------+------+-----+---------+----------------+
+10 rows in set (0.01 sec)
+
+MariaDB [HARI]> insert into employees values
+    ->          (1,'Hari','Krishnan','hari@gmail.com',9678456234,2,300000,NULL,1,30000);
+Query OK, 1 row affected, 1 warning (0.02 sec)
+
+MariaDB [HARI]> insert into employees values          (2,'Jabir','MJ','jabir@gmail.com',9678456231,4,200000,NULL,1,20000);
+Query OK, 1 row affected, 1 warning (0.03 sec)
+
+MariaDB [HARI]> insert into employees values          (3,'Vaishakh','MV','vaishakh@gmail.com',9678456232,5,100000,NULL,1,10000);
+Query OK, 1 row affected, 1 warning (0.03 sec)
+MariaDB [HARI]> insert into employees values          (4,'Ravi','Krishnan','ravi@gmail.com',9678456230,3,20000,NULL,1,50000);
+Query OK, 1 row affected (0.04 sec)
+MariaDB [HARI]> insert into employees values          (5,'Raj','Shanker','raj@gmail.com',9678456238,1,20000,3,1,40000);
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [HARI]> select * from employees;
++--------+------------+-----------+--------------------+------------+--------+--------+------------+---------------+------------+
+| emp_id | first_name | last_name | email              | ph_no      | job_id | salary | manager_id | department_id | commission |
++--------+------------+-----------+--------------------+------------+--------+--------+------------+---------------+------------+
+|      1 | Hari       | Krishnan  | hari@gmail.com     | 9678456234 |      2 |  32767 |       NULL |             1 |      30000 |
+|      2 | Jabir      | MJ        | jabir@gmail.com    | 9678456231 |      4 |  32767 |       NULL |             1 |      20000 |
+|      3 | Vaishakh   | MV        | vaishakh@gmail.com | 9678456232 |      5 |  32767 |       NULL |             1 |      10000 |
+|      4 | Ravi       | Krishnan  | ravi@gmail.com     | 9678456230 |      3 |  20000 |       NULL |             1 |      50000 |
+|      5 | Raj        | Shanker   | raj@gmail.com      | 9678456238 |      1 |  20000 |          3 |             1 |      40000 |
++--------+------------+-----------+--------------------+------------+--------+--------+------------+---------------+------------+
+5 rows in set (0.00 sec)
+

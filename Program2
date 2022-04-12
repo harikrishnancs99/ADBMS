@@ -1,0 +1,238 @@
+student@student-OptiPlex-3050:~/Desktop/Harikrishnan/DBMS$ sudo mysql -u root -p[sudo] password for student: 
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 33
+Server version: 10.0.38-MariaDB-0ubuntu0.16.04.1 Ubuntu 16.04
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> create database db;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [(none)]> use db;
+Database changed
+MariaDB [db]> create table employee(Empno int,empname varchar(20),empdesignation varchar(20),salary int,DOB int,departmentno int);
+Query OK, 0 rows affected (0.45 sec)
+
+MariaDB [db]> insert into employee(1,'Hari','Manager',25000,16-05-1999,5);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '1,'Hari','Manager',25000,16-05-1999,5)' at line 1
+MariaDB [db]> insert into employee values(1,'Hari','Manager',25000,16-05-1999,5);
+Query OK, 1 row affected (0.05 sec)
+
+MariaDB [db]> insert into employee values(2,'Jabir','Full stack developer',55000,08-12-1997,5);
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [db]> insert into employee values(3,'Vaishakh','Product Designer',45000,15-06-1998,6);
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [db]> insert into employee values(4,'Sarang','UX Developer',35000,07-09-2000,7);
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [db]> select * from employee;
++-------+----------+----------------------+--------+-------+--------------+
+| Empno | empname  | empdesignation       | salary | DOB   | departmentno |
++-------+----------+----------------------+--------+-------+--------------+
+|     1 | Hari     | Manager              |  25000 | -1988 |            5 |
+|     2 | Jabir    | Full stack developer |  55000 | -2001 |            5 |
+|     3 | Vaishakh | Product Designer     |  45000 | -1989 |            6 |
+|     4 | Sarang   | UX Developer         |  35000 | -2002 |            7 |
++-------+----------+----------------------+--------+-------+--------------+
+4 rows in set (0.00 sec)
+
+MariaDB [db]> update employee set departmentno=5 where Empno=2
+    -> ;
+Query OK, 0 rows affected (0.05 sec)
+Rows matched: 1  Changed: 0  Warnings: 0
+
+MariaDB [db]> select * from employee;
++-------+----------+----------------------+--------+-------+--------------+
+| Empno | empname  | empdesignation       | salary | DOB   | departmentno |
++-------+----------+----------------------+--------+-------+--------------+
+|     1 | Hari     | Manager              |  25000 | -1988 |            5 |
+|     2 | Jabir    | Full stack developer |  55000 | -2001 |            5 |
+|     3 | Vaishakh | Product Designer     |  45000 | -1989 |            6 |
+|     4 | Sarang   | UX Developer         |  35000 | -2002 |            7 |
++-------+----------+----------------------+--------+-------+--------------+
+4 rows in set (0.00 sec)
+
+MariaDB [db]> update employee set departmentno=6 where Empno=2;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [db]> select * from employee;
++-------+----------+----------------------+--------+-------+--------------+
+| Empno | empname  | empdesignation       | salary | DOB   | departmentno |
++-------+----------+----------------------+--------+-------+--------------+
+|     1 | Hari     | Manager              |  25000 | -1988 |            5 |
+|     2 | Jabir    | Full stack developer |  55000 | -2001 |            6 |
+|     3 | Vaishakh | Product Designer     |  45000 | -1989 |            6 |
+|     4 | Sarang   | UX Developer         |  35000 | -2002 |            7 |
++-------+----------+----------------------+--------+-------+--------------+
+4 rows in set (0.00 sec)
+
+MariaDB [db]> update employee set departmentno=7 where Empno=3;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [db]> update employee set departmentno=8 where Empno=4;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [db]> select * from employee;
++-------+----------+----------------------+--------+-------+--------------+
+| Empno | empname  | empdesignation       | salary | DOB   | departmentno |
++-------+----------+----------------------+--------+-------+--------------+
+|     1 | Hari     | Manager              |  25000 | -1988 |            5 |
+|     2 | Jabir    | Full stack developer |  55000 | -2001 |            6 |
+|     3 | Vaishakh | Product Designer     |  45000 | -1989 |            7 |
+|     4 | Sarang   | UX Developer         |  35000 | -2002 |            8 |
++-------+----------+----------------------+--------+-------+--------------+
+4 rows in set (0.00 sec)
+
+MariaDB [db]> update employee set DOB='1999/05/16' where Empno=1;
+Query OK, 1 row affected, 1 warning (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 1
+
+MariaDB [db]> select * from employee;
++-------+----------+----------------------+--------+-------+--------------+
+| Empno | empname  | empdesignation       | salary | DOB   | departmentno |
++-------+----------+----------------------+--------+-------+--------------+
+|     1 | Hari     | Manager              |  25000 |  1999 |            5 |
+|     2 | Jabir    | Full stack developer |  55000 | -2001 |            6 |
+|     3 | Vaishakh | Product Designer     |  45000 | -1989 |            7 |
+|     4 | Sarang   | UX Developer         |  35000 | -2002 |            8 |
++-------+----------+----------------------+--------+-------+--------------+
+4 rows in set (0.00 sec)
+
+MariaDB [db]> alter table employee modify DOB date;
+Query OK, 4 rows affected, 4 warnings (0.64 sec)   
+Records: 4  Duplicates: 0  Warnings: 4
+
+MariaDB [db]> update employee set DOB='1999/05/16' where Empno=1;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [db]> select * from employee;
++-------+----------+----------------------+--------+------------+--------------+
+| Empno | empname  | empdesignation       | salary | DOB        | departmentno |
++-------+----------+----------------------+--------+------------+--------------+
+|     1 | Hari     | Manager              |  25000 | 1999-05-16 |            5 |
+|     2 | Jabir    | Full stack developer |  55000 | 0000-00-00 |            6 |
+|     3 | Vaishakh | Product Designer     |  45000 | 0000-00-00 |            7 |
+|     4 | Sarang   | UX Developer         |  35000 | 0000-00-00 |            8 |
++-------+----------+----------------------+--------+------------+--------------+
+4 rows in set (0.00 sec)
+
+MariaDB [db]> update employee set DOB='1997/12/08' where Empno=2;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [db]> update employee set DOB='1998/06/15' where Empno=3;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [db]> update employee set DOB='2000/09/07' where Empno=4;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [db]> select * from employee;
++-------+----------+----------------------+--------+------------+--------------+
+| Empno | empname  | empdesignation       | salary | DOB        | departmentno |
++-------+----------+----------------------+--------+------------+--------------+
+|     1 | Hari     | Manager              |  25000 | 1999-05-16 |            5 |
+|     2 | Jabir    | Full stack developer |  55000 | 1997-12-08 |            6 |
+|     3 | Vaishakh | Product Designer     |  45000 | 1998-06-15 |            7 |
+|     4 | Sarang   | UX Developer         |  35000 | 2000-09-07 |            8 |
++-------+----------+----------------------+--------+------------+--------------+
+4 rows in set (0.00 sec)
+
+MariaDB [db]> insert into employee values(5,'Syam','Server Administrator',25000,09-07-2000,9);
+Query OK, 1 row affected, 1 warning (0.03 sec)
+
+MariaDB [db]> select * from employee;
++-------+----------+----------------------+--------+------------+--------------+
+| Empno | empname  | empdesignation       | salary | DOB        | departmentno |
++-------+----------+----------------------+--------+------------+--------------+
+|     1 | Hari     | Manager              |  25000 | 1999-05-16 |            5 |
+|     2 | Jabir    | Full stack developer |  55000 | 1997-12-08 |            6 |
+|     3 | Vaishakh | Product Designer     |  45000 | 1998-06-15 |            7 |
+|     4 | Sarang   | UX Developer         |  35000 | 2000-09-07 |            8 |
+|     5 | Syam     | Server Administrator |  25000 | 0000-00-00 |            9 |
++-------+----------+----------------------+--------+------------+--------------+
+5 rows in set (0.00 sec)
+
+MariaDB [db]> delete from employ where departmentno=6;
+ERROR 1146 (42S02): Table 'db.employ' doesn't exist
+MariaDB [db]> delete from employee where departmentno=6;
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [db]> select * from employee;
++-------+----------+----------------------+--------+------------+--------------+
+| Empno | empname  | empdesignation       | salary | DOB        | departmentno |
++-------+----------+----------------------+--------+------------+--------------+
+|     1 | Hari     | Manager              |  25000 | 1999-05-16 |            5 |
+|     3 | Vaishakh | Product Designer     |  45000 | 1998-06-15 |            7 |
+|     4 | Sarang   | UX Developer         |  35000 | 2000-09-07 |            8 |
+|     5 | Syam     | Server Administrator |  25000 | 0000-00-00 |            9 |
++-------+----------+----------------------+--------+------------+--------------+
+4 rows in set (0.00 sec)
+
+MariaDB [db]> update employee set salary= salary+5000 where empdesignation='Manager';
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [db]> select * from employee;
++-------+----------+----------------------+--------+------------+--------------+
+| Empno | empname  | empdesignation       | salary | DOB        | departmentno |
++-------+----------+----------------------+--------+------------+--------------+
+|     1 | Hari     | Manager              |  30000 | 1999-05-16 |            5 |
+|     3 | Vaishakh | Product Designer     |  45000 | 1998-06-15 |            7 |
+|     4 | Sarang   | UX Developer         |  35000 | 2000-09-07 |            8 |
+|     5 | Syam     | Server Administrator |  25000 | 0000-00-00 |            9 |
++-------+----------+----------------------+--------+------------+--------------+
+4 rows in set (0.00 sec)
+
+MariaDB [db]> select * from employee order by empname;
++-------+----------+----------------------+--------+------------+--------------+
+| Empno | empname  | empdesignation       | salary | DOB        | departmentno |
++-------+----------+----------------------+--------+------------+--------------+
+|     1 | Hari     | Manager              |  30000 | 1999-05-16 |            5 |
+|     4 | Sarang   | UX Developer         |  35000 | 2000-09-07 |            8 |
+|     5 | Syam     | Server Administrator |  25000 | 0000-00-00 |            9 |
+|     3 | Vaishakh | Product Designer     |  45000 | 1998-06-15 |            7 |
++-------+----------+----------------------+--------+------------+--------------+
+4 rows in set (0.00 sec)
+
+MariaDB [db]> select * from employee;
++-------+----------+----------------------+--------+------------+--------------+
+| Empno | empname  | empdesignation       | salary | DOB        | departmentno |
++-------+----------+----------------------+--------+------------+--------------+
+|     1 | Hari     | Manager              |  30000 | 1999-05-16 |            5 |
+|     3 | Vaishakh | Product Designer     |  45000 | 1998-06-15 |            7 |
+|     4 | Sarang   | UX Developer         |  35000 | 2000-09-07 |            8 |
+|     5 | Syam     | Server Administrator |  25000 | 0000-00-00 |            9 |
++-------+----------+----------------------+--------+------------+--------------+
+4 rows in set (0.00 sec)
+
+MariaDB [db]> select * from employee order by empname;
++-------+----------+----------------------+--------+------------+--------------+
+| Empno | empname  | empdesignation       | salary | DOB        | departmentno |
++-------+----------+----------------------+--------+------------+--------------+
+|     1 | Hari     | Manager              |  30000 | 1999-05-16 |            5 |
+|     4 | Sarang   | UX Developer         |  35000 | 2000-09-07 |            8 |
+|     5 | Syam     | Server Administrator |  25000 | 0000-00-00 |            9 |
+|     3 | Vaishakh | Product Designer     |  45000 | 1998-06-15 |            7 |
++-------+----------+----------------------+--------+------------+--------------+
+4 rows in set (0.00 sec)
+
+MariaDB [db]> truncate table employee
+    -> ;
+Query OK, 0 rows affected (0.19 sec)
+
+MariaDB [db]> select * from employee;
+Empty set (0.00 sec)
+
+MariaDB [db]> 
+

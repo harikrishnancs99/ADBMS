@@ -1,0 +1,66 @@
+student@student-OptiPlex-3050:~/Desktop/Harikrishnan/DBMS$ sudo mysql -u root -p
+[sudo] password for student: 
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 32
+Server version: 10.0.38-MariaDB-0ubuntu0.16.04.1 Ubuntu 16.04
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> Create user 'harics'@localhost IDENTIFIED BY 'root'
+    -> Create user 'harics'@localhost IDENTIFIED BY 'root';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'Create user 'harics'@localhost IDENTIFIED BY 'root'' at line 2
+MariaDB [(none)]> Create user 'harics'@localhost IDENTIFIED BY 'root';
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [(none)]> Grant ALL PRIVILEGES ON *.* TO 'harics'@localhost;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [(none)]> SHOW GRANTS FOR 'harics'@localhost;
++------------------------------------------------------------------------------------------------------------------------+
+| Grants for harics@localhost                                                                                            |
++------------------------------------------------------------------------------------------------------------------------+
+| GRANT ALL PRIVILEGES ON *.* TO 'harics'@'localhost' IDENTIFIED BY PASSWORD '*81F5E21E35407D884A6CD4A731AEBFB6AF209E1B' |
++------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [(none)]> REVOKE INSERT ON *.* FROM 'harics'@localhost;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [(none)]> SHOW GRANTS FOR 'harics'@localhost;
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Grants for harics@localhost                                                                                                                                                                                                                                                                                                                                                                                                 |
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| GRANT SELECT, UPDATE, DELETE, CREATE, DROP, RELOAD, SHUTDOWN, PROCESS, FILE, REFERENCES, INDEX, ALTER, SHOW DATABASES, SUPER, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE, REPLICATION SLAVE, REPLICATION CLIENT, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, CREATE USER, EVENT, TRIGGER, CREATE TABLESPACE ON *.* TO 'harics'@'localhost' IDENTIFIED BY PASSWORD '*81F5E21E35407D884A6CD4A731AEBFB6AF209E1B' |
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [(none)]> Ctrl-C -- exit!
+Aborted
+student@student-OptiPlex-3050:~/Desktop/Harikrishnan/DBMS$ sudo mysql -u harics -p
+Enter password: 
+ERROR 1045 (28000): Access denied for user 'harics'@'localhost' (using password: YES)
+student@student-OptiPlex-3050:~/Desktop/Harikrishnan/DBMS$ sudo mysql -u harics -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 35
+Server version: 10.0.38-MariaDB-0ubuntu0.16.04.1 Ubuntu 16.04
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> create table student(rollno int,name varchar(30));
+ERROR 1046 (3D000): No database selected
+MariaDB [(none)]> use HARI;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MariaDB [HARI]> create table student(rollno int,name varchar(30));
+Query OK, 0 rows affected (0.21 sec)
+
+MariaDB [HARI]> insert into student values(1,'Hari');
+ERROR 1142 (42000): INSERT command denied to user 'harics'@'localhost' for table 'student'

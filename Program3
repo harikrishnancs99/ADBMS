@@ -1,0 +1,231 @@
+student@student-OptiPlex-3050:~/Desktop/Harikrishnan/DBMS$ sudo mysql -u root -p
+[sudo] password for student: 
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 33
+Server version: 10.0.38-MariaDB-0ubuntu0.16.04.1 Ubuntu 16.04
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use employee
+ERROR 1049 (42000): Unknown database 'employee'
+MariaDB [(none)]> use employee;
+ERROR 1049 (42000): Unknown database 'employee'
+MariaDB [(none)]> use Employee;
+ERROR 1049 (42000): Unknown database 'Employee'
+MariaDB [(none)]> create database clientmaster;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [(none)]> use clientmaster;
+Database changed
+MariaDB [clientmaster]> create table clientmaster(clientno varchar(8),clientName varchar(20),address varchar(50),city varchar(50),pincode int,state varchar(50));
+Query OK, 0 rows affected (0.25 sec)
+
+MariaDB [clientmaster]> insert into clientmaster('CO195','Hari','Cherattupady','Aluva',683101,'Kerala');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''CO195','Hari','Cherattupady','Aluva',683101,'Kerala')' at line 1
+MariaDB [clientmaster]> insert into clientmaster('CO195','Hari','Cherattupady','Aluva',683101,'Kerala');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''CO195','Hari','Cherattupady','Aluva',683101,'Kerala')' at line 1
+MariaDB [clientmaster]> insert into clientmaster values('CO195','Hari','Cherattupady','Aluva',683101,'Kerala');
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [clientmaster]> insert into clientmaster values('CO196','Vaishakh','Marakkal','Kodungaloor',680684,'Kerala');
+Query OK, 1 row affected (0.03 sec)
+
+MariaDB [clientmaster]> insert into clientmaster values('CO197','Ravi','XYZ','Ernakulam',681041,'Kerala');
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [clientmaster]> insert into clientmaster values('CO198','Raj','Njarakkal','Angamally',681042,'Kerala');
+Query OK, 1 row affected (0.03 sec)
+
+MariaDB [clientmaster]> insert into clientmaster values('CO199','Rahul','Valiyavettil','Kochi',681043,'Kerala');
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [clientmaster]> insert into clientmaster values('CO200','Syam','Cheriyavettil','Palakkad',681044,'Kerala');
+Query OK, 1 row affected (0.03 sec)
+
+MariaDB [clientmaster]> select * from clientmaster;
++----------+------------+---------------+-------------+---------+--------+
+| clientno | clientName | address       | city        | pincode | state  |
++----------+------------+---------------+-------------+---------+--------+
+| CO195    | Hari       | Cherattupady  | Aluva       |  683101 | Kerala |
+| CO196    | Vaishakh   | Marakkal      | Kodungaloor |  680684 | Kerala |
+| CO197    | Ravi       | XYZ           | Ernakulam   |  681041 | Kerala |
+| CO198    | Raj        | Njarakkal     | Angamally   |  681042 | Kerala |
+| CO199    | Rahul      | Valiyavettil  | Kochi       |  681043 | Kerala |
+| CO200    | Syam       | Cheriyavettil | Palakkad    |  681044 | Kerala |
++----------+------------+---------------+-------------+---------+--------+
+6 rows in set (0.00 sec)
+
+MariaDB [clientmaster]> delete from clientmaster where clientno=CO200;
+ERROR 1054 (42S22): Unknown column 'CO200' in 'where clause'
+MariaDB [clientmaster]> delete from clientmaster where clientname=Syam;
+ERROR 1054 (42S22): Unknown column 'Syam' in 'where clause'
+MariaDB [clientmaster]> delete from clientmaster where clientname="Syam";
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [clientmaster]> select * from clientmaster;
++----------+------------+--------------+-------------+---------+--------+
+| clientno | clientName | address      | city        | pincode | state  |
++----------+------------+--------------+-------------+---------+--------+
+| CO195    | Hari       | Cherattupady | Aluva       |  683101 | Kerala |
+| CO196    | Vaishakh   | Marakkal     | Kodungaloor |  680684 | Kerala |
+| CO197    | Ravi       | XYZ          | Ernakulam   |  681041 | Kerala |
+| CO198    | Raj        | Njarakkal    | Angamally   |  681042 | Kerala |
+| CO199    | Rahul      | Valiyavettil | Kochi       |  681043 | Kerala |
++----------+------------+--------------+-------------+---------+--------+
+5 rows in set (0.00 sec)
+
+MariaDB [clientmaster]> insert into clientmaster values('CO200','Jaya','Cheriyavettil','Palakkad',681044,'Kerala');
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [clientmaster]> select * from clientmaster;
++----------+------------+---------------+-------------+---------+--------+
+| clientno | clientName | address       | city        | pincode | state  |
++----------+------------+---------------+-------------+---------+--------+
+| CO195    | Hari       | Cherattupady  | Aluva       |  683101 | Kerala |
+| CO196    | Vaishakh   | Marakkal      | Kodungaloor |  680684 | Kerala |
+| CO197    | Ravi       | XYZ           | Ernakulam   |  681041 | Kerala |
+| CO198    | Raj        | Njarakkal     | Angamally   |  681042 | Kerala |
+| CO199    | Rahul      | Valiyavettil  | Kochi       |  681043 | Kerala |
+| CO200    | Jaya       | Cheriyavettil | Palakkad    |  681044 | Kerala |
++----------+------------+---------------+-------------+---------+--------+
+6 rows in set (0.00 sec)
+
+MariaDB [clientmaster]> select clientno,clientName from clientmaster;
++----------+------------+
+| clientno | clientName |
++----------+------------+
+| CO195    | Hari       |
+| CO196    | Vaishakh   |
+| CO197    | Ravi       |
+| CO198    | Raj        |
+| CO199    | Rahul      |
+| CO200    | Jaya       |
++----------+------------+
+6 rows in set (0.00 sec)
+
+MariaDB [clientmaster]> select distinct(clientname) from clientmaster;
++------------+
+| clientname |
++------------+
+| Hari       |
+| Vaishakh   |
+| Ravi       |
+| Raj        |
+| Rahul      |
+| Jaya       |
++------------+
+6 rows in set (0.00 sec)
+
+MariaDB [clientmaster]> select clientno,clientname,address,city from clientmaster order by clientname;
++----------+------------+---------------+-------------+
+| clientno | clientname | address       | city        |
++----------+------------+---------------+-------------+
+| CO195    | Hari       | Cherattupady  | Aluva       |
+| CO200    | Jaya       | Cheriyavettil | Palakkad    |
+| CO199    | Rahul      | Valiyavettil  | Kochi       |
+| CO198    | Raj        | Njarakkal     | Angamally   |
+| CO197    | Ravi       | XYZ           | Ernakulam   |
+| CO196    | Vaishakh   | Marakkal      | Kodungaloor |
++----------+------------+---------------+-------------+
+6 rows in set (0.00 sec)
+
+MariaDB [clientmaster]> select clientno,clientname,address,city from clientmaster order by clientname ds;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'ds' at line 1
+MariaDB [clientmaster]> select clientno,clientname,address,city from clientmaster order by clientname desc;
++----------+------------+---------------+-------------+
+| clientno | clientname | address       | city        |
++----------+------------+---------------+-------------+
+| CO196    | Vaishakh   | Marakkal      | Kodungaloor |
+| CO197    | Ravi       | XYZ           | Ernakulam   |
+| CO198    | Raj        | Njarakkal     | Angamally   |
+| CO199    | Rahul      | Valiyavettil  | Kochi       |
+| CO200    | Jaya       | Cheriyavettil | Palakkad    |
+| CO195    | Hari       | Cherattupady  | Aluva       |
++----------+------------+---------------+-------------+
+6 rows in set (0.00 sec)
+
+MariaDB [clientmaster]> alter table clientmaster add(telno int,faxno int);
+Query OK, 0 rows affected (0.33 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [clientmaster]> select * from clientmaster;
++----------+------------+---------------+-------------+---------+--------+-------+-------+
+| clientno | clientName | address       | city        | pincode | state  | telno | faxno |
++----------+------------+---------------+-------------+---------+--------+-------+-------+
+| CO195    | Hari       | Cherattupady  | Aluva       |  683101 | Kerala |  NULL |  NULL |
+| CO196    | Vaishakh   | Marakkal      | Kodungaloor |  680684 | Kerala |  NULL |  NULL |
+| CO197    | Ravi       | XYZ           | Ernakulam   |  681041 | Kerala |  NULL |  NULL |
+| CO198    | Raj        | Njarakkal     | Angamally   |  681042 | Kerala |  NULL |  NULL |
+| CO199    | Rahul      | Valiyavettil  | Kochi       |  681043 | Kerala |  NULL |  NULL |
+| CO200    | Jaya       | Cheriyavettil | Palakkad    |  681044 | Kerala |  NULL |  NULL |
++----------+------------+---------------+-------------+---------+--------+-------+-------+
+6 rows in set (0.00 sec)
+
+MariaDB [clientmaster]> alter table clientmaster modify(faxno varchar(20));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '(faxno varchar(20))' at line 1
+MariaDB [clientmaster]> alter table clientmaster modify faxno varchar(20);
+Query OK, 6 rows affected (0.61 sec)               
+Records: 6  Duplicates: 0  Warnings: 0
+
+MariaDB [clientmaster]> alter table clientmaster modify telno long;
+Query OK, 6 rows affected (0.62 sec)               
+Records: 6  Duplicates: 0  Warnings: 0
+
+MariaDB [clientmaster]> update clientmaster set telno=9847723412,faxno='C400' where clientno='CO195';
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [clientmaster]> select * from clientmaster;
++----------+------------+---------------+-------------+---------+--------+------------+-------+
+| clientno | clientName | address       | city        | pincode | state  | telno      | faxno |
++----------+------------+---------------+-------------+---------+--------+------------+-------+
+| CO195    | Hari       | Cherattupady  | Aluva       |  683101 | Kerala | 9847723412 | C400  |
+| CO196    | Vaishakh   | Marakkal      | Kodungaloor |  680684 | Kerala | NULL       | NULL  |
+| CO197    | Ravi       | XYZ           | Ernakulam   |  681041 | Kerala | NULL       | NULL  |
+| CO198    | Raj        | Njarakkal     | Angamally   |  681042 | Kerala | NULL       | NULL  |
+| CO199    | Rahul      | Valiyavettil  | Kochi       |  681043 | Kerala | NULL       | NULL  |
+| CO200    | Jaya       | Cheriyavettil | Palakkad    |  681044 | Kerala | NULL       | NULL  |
++----------+------------+---------------+-------------+---------+--------+------------+-------+
+6 rows in set (0.00 sec)
+
+MariaDB [clientmaster]> update clientmaster set telno=9847723413,faxno='C500' where clientno='CO196';
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [clientmaster]> update clientmaster set telno=9847723414,faxno='C600' where clientno='CO197';
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [clientmaster]> update clientmaster set telno=9847723415,faxno='C700' where clientno='CO198';
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [clientmaster]> update clientmaster set telno=9847723416,faxno='C800' where clientno='CO199';
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [clientmaster]> update clientmaster set telno=9847723417,faxno='C900' where clientno='CO200';
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [clientmaster]> select * from clientmaster;
++----------+------------+---------------+-------------+---------+--------+------------+-------+
+| clientno | clientName | address       | city        | pincode | state  | telno      | faxno |
++----------+------------+---------------+-------------+---------+--------+------------+-------+
+| CO195    | Hari       | Cherattupady  | Aluva       |  683101 | Kerala | 9847723412 | C400  |
+| CO196    | Vaishakh   | Marakkal      | Kodungaloor |  680684 | Kerala | 9847723413 | C500  |
+| CO197    | Ravi       | XYZ           | Ernakulam   |  681041 | Kerala | 9847723414 | C600  |
+| CO198    | Raj        | Njarakkal     | Angamally   |  681042 | Kerala | 9847723415 | C700  |
+| CO199    | Rahul      | Valiyavettil  | Kochi       |  681043 | Kerala | 9847723416 | C800  |
+| CO200    | Jaya       | Cheriyavettil | Palakkad    |  681044 | Kerala | 9847723417 | C900  |
++----------+------------+---------------+-------------+---------+--------+------------+-------+
+6 rows in set (0.00 sec)
+
+MariaDB [clientmaster]> truncate table clientmaster;
+Query OK, 0 rows affected (0.27 sec)
+
+MariaDB [clientmaster]> 
+

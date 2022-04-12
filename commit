@@ -1,0 +1,60 @@
+MariaDB [(none)]> create table Customers(c_id int PRIMARY KEY AUTO_INCREMENT,c_name varchar(30),salary int);
+ERROR 1046 (3D000): No database selected
+MariaDB [(none)]> use HARI;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MariaDB [HARI]> create table Customers(c_id int PRIMARY KEY AUTO_INCREMENT,c_name varchar(30),salary int);
+Query OK, 0 rows affected (0.24 sec)
+
+MariaDB [HARI]> start transaction;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [HARI]> insert into customer values(1,'Hari',100000),(2,'Ravi',10000);
+ERROR 1062 (23000): Duplicate entry '1' for key 'PRIMARY'
+MariaDB [HARI]> insert into customer values(1,'Hari',100000),(2,'Ravi',10000);
+ERROR 1062 (23000): Duplicate entry '1' for key 'PRIMARY'
+MariaDB [HARI]> insert into Customers values(1,'Hari',100000);
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [HARI]> commit;
+Query OK, 0 rows affected (0.03 sec)
+
+MariaDB [HARI]> set autocommit=0;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [HARI]> insert into Customers values(2,'Ravi',200000);
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [HARI]> insert into Customers values(3,'Paul',300000);
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [HARI]> delete from Customers where c_name='Hari';
+Query OK, 1 row affected (0.01 sec)
+
+MariaDB [HARI]> rollback;
+Query OK, 0 rows affected (0.03 sec)
+
+MariaDB [HARI]> select * from Customers;
++------+--------+--------+
+| c_id | c_name | salary |
++------+--------+--------+
+|    1 | Hari   | 100000 |
++------+--------+--------+
+1 row in set (0.00 sec)
+
+MariaDB [HARI]> start transaction;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [HARI]> savepoint sp1;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [HARI]> select * from Customers;
++------+--------+--------+
+| c_id | c_name | salary |
++------+--------+--------+
+|    1 | Hari   | 100000 |
++------+--------+--------+
+1 row in set (0.00 sec)
+
